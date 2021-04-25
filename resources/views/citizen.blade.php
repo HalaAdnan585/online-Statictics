@@ -79,21 +79,21 @@
 function  myDeleteFunction(e) {
     e.preventDefault();
   const table = document.getElementById("myTable")
-  if(myTable.rows.length>2) 
-  table.deleteRow(table.rows.length - 1); 
+  if(myTable.rows.length>2)
+  table.deleteRow(table.rows.length - 1);
 //   else return" ";
 }
 
 function  myDeleteFunction_dead(e) {
     e.preventDefault();
   const table = document.getElementById("dead_table")
-  if(dead_table.rows.length>3) 
-  table.deleteRow(table.rows.length - 1); 
+  if(dead_table.rows.length>3)
+  table.deleteRow(table.rows.length - 1);
 //   else return" ";
 }
 
 // function checkAge(e){
-    
+
 //     if(parseInt(e.target.value, 10) >= 3){
 //         document.getElementById("age").disabled=false;
 //         // console.log('bigger')
@@ -106,14 +106,14 @@ function  myDeleteFunction_dead(e) {
 // }
 
 // function checkAge1(e){
-   
+
 //     if(parseInt(e.target.value, 10) >= 5){
 //         document.getElementById("age").disabled=false;
-      
+
 //     } else {
 //         document.getElementById("Kindergarten1").disabled=true;
 //         document.getElementById("meal").disabled=true;
-      
+
 //     }
 // }
 
@@ -121,7 +121,7 @@ function  myDeleteFunction_dead(e) {
 
 <script>
     function Add(e){
-    e.preventDefault(); 
+    e.preventDefault();
     const markup=`<tr>
     <th scope="row">1</th>
     <td><input type="text" class="" name="FullName" id="FullName" value="{{ $id->name ?? ''}}" data-toggle="tooltip" data-placement="bottom" title="ادخل الاسم الرباعي"></td>
@@ -226,9 +226,9 @@ function  myDeleteFunction_dead(e) {
 
         };
 
-            
+
      function Add_dead(e){
-        e.preventDefault(); 
+        e.preventDefault();
         const markup=` <tr>
     <th scope="row">1</th>
     <td><input type="name" class="" name="Full_name_dead"></td>
@@ -249,7 +249,7 @@ function  myDeleteFunction_dead(e) {
             <option >ذكر</option>
             <option >انثى</option>
         </select></td>
-    <td><input type="number" class="" name="age"></td>
+    <td><input type="number" class="" name="age2"></td>
     <td><select class="" data-placeholder="Select" name="Death_certificate">
             <option >نعم</option>
             <option >لا</option>
@@ -368,7 +368,6 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                 <th class="text-center" style="width:5%">العمر بالسنوات الكامله(الاطفال الاقل من سنه يوضع 0)</th>
                                                 <th class="text-center" style="width:6%">العلاقه برب الاسره</th>
                                                 <th class="text-center" style="width:4%">الجنس</th>
-                                               
                                                 <th class="text-center" style="width:5%">الجنسيه الاصليه</th>
                                                 <th class="text-center" style="width:5%">رقم الهويه</th>
                                                 <th class="text-center" style="width:4%">مكان اقامه الام وقت الولاده</th>
@@ -387,10 +386,10 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
                                             <tr>
                                                 <th scope="row">1</th>
-                                                <td><input type="text" class="" name="FullName" id="FullName" value="{{ $id->name ?? ''}}" data-toggle="tooltip" data-placement="bottom" title="ادخل الاسم الرباعي"></td>
-                                                <td><input type="number" oninput="checkAge(event)" class="" name="age" id="age" value="{{$ff->age ?? ''}}"></td>
-                                                <td><select class="" data-placeholder="Select" name="relationship">
-                                                        <!-- <option disabled selected>16-المصدر الرئيسي للطاقه المستخدمة في التدفئة</option> -->
+                                                <td><input type="text" class="" name="name" id="FullName" value="{{ $id->name ?? ''}}" data-toggle="tooltip" data-placement="bottom" title="ادخل الاسم الرباعي"></td>
+                                                <td><input type="number" name="citizin_age" id="citizin_age"></td>
+                                                <td><select class="" data-placeholder="Select" name="citizin_relationship">
+                                                        <option  {{ ($ff->relationShip ?? '' =='رب الاسره')? "selected" : '' }}>رب الاسره</option>
                                                         <option  {{ ($ff->relationShip ?? '' =='اخ/اخت')? "selected" : '' }}>اخ/اخت</option>
                                                         <option  {{ ($ff->relationShip ?? '' =='ابن/ابنه')? "selected" : '' }}>ابن/ابنه</option>
                                                         <option  {{ ($ff->relationShip ?? '' =='زوجه/زوج')? "selected" : '' }}>زوجه/زوج</option>
@@ -402,39 +401,39 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
                                                     </select>
                                                 </td>
-                                                <td><select class="" data-placeholder="Select" name="gender">
+                                                <td><select class="" data-placeholder="Select" name="citizin_gender">
                                                         <!-- <option disabled selected>16-المصدر الرئيسي للطاقه المستخدمة في التدفئة</option> -->
                                                         <option id="meal" {{ ($ff->gender ?? '' =='انثى')? "selected" : '' }}>انثى</option>
                                                         <option {{ ($ff->gender ?? '' =='ذكر')? "selected" : '' }}>ذكر</option>
 
                                                     </select>
                                                 </td>
-                                               
+
                                                 <td><input type="text" class="" name="nationality" value="{{$ff->nationality ?? ''}}"></td>
-                                                <td><input type="number" class="" name="id" value="{{ $id->id  ?? ''}}"></td>
+                                                <td><input type="number" class="" name="id1" ></td>
                                                 <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}"></td>
-                                                <td><input type="text" class="" name="place" value="{{ $id->place  ?? ''}}"></td>
+                                                <td><input type="text" class="" name="citizin_place" value="{{ $id->place  ?? ''}}"></td>
                                                 <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}"></td>
                                                 <td><input type="text" class="" name="previous_place" value="{{$ff->previous_place ?? ''}}"></td>
 
                                                 <td><select class="" data-placeholder="Select" name="reason_change_residence">
-                                                       
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='العمل')? "selected" : '' }}>العمل</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='الدراسه')? "selected" : '' }}>الدراسه</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='الزواج')? "selected" : '' }}>الزواج</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='المرافقه')? "selected" : '' }}>المرافقه</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='التهجير')? "selected" : '' }}>التهجير</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='العوده')? "selected" : '' }}>العوده</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='الجدار')? "selected" : '' }}>الجدار</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='الحفاظ على الهويه المقدسه')? "selected" : '' }}>الحفاظ على الهويه المقدسه</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='اجراءات اسرائيليه')? "selected" : '' }}>اجراءات اسرائيليه</option>
-                                                        <option disabled {{ ($ff->reason_change_residence ?? '' =='اخرى')? "selected" : '' }}>اخرى</option>
+
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='العمل')? "selected" : '' }}>العمل</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='الدراسه')? "selected" : '' }}>الدراسه</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='الزواج')? "selected" : '' }}>الزواج</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='المرافقه')? "selected" : '' }}>المرافقه</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='التهجير')? "selected" : '' }}>التهجير</option>
+                                                        <option {{ ($ff->reason_change_residence ?? '' =='العوده')? "selected" : '' }}>العوده</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='الجدار')? "selected" : '' }}>الجدار</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='الحفاظ على الهويه المقدسه')? "selected" : '' }}>الحفاظ على الهويه المقدسه</option>
+                                                        <option {{ ($ff->reason_change_residence ?? '' =='اجراءات اسرائيليه')? "selected" : '' }}>اجراءات اسرائيليه</option>
+                                                        <option  {{ ($ff->reason_change_residence ?? '' =='اخرى')? "selected" : '' }}>اخرى</option>
 
                                                     </select>
                                                 </td>
 
                                                 <td><select class="" data-placeholder="Select" name="religion">
-                                                        
+
                                                         <option {{ ($ff->religion ?? '' =='مسيحي')? "selected" : '' }}>مسيحي</option>
                                                         <option {{ ($ff->religion ?? '' =='مسلم')? "selected" : '' }}>مسلم</option>
                                                         <option {{ ($ff->religion ?? '' =='اخرى')? "selected" : '' }}>اخرى</option>
@@ -443,7 +442,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                 </td>
 
                                                 <td><select class="" data-placeholder="Select" name="asylum_status">
-                                                        
+
                                                         <option {{ ($ff->asylum_status ?? '' =='لاجئ مسجل')? "selected" : '' }}>لاجئ مسجل</option>
                                                         <option {{ ($ff->asylum_status ?? '' =='لاجئ غير مسجل')? "selected" : '' }}>لاجئ غير مسجل</option>
                                                         <option {{ ($ff->asylum_status ?? '' =='ليس لاجئا')? "selected" : '' }}>ليس لاجئا</option>
@@ -452,7 +451,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                 </td>
 
                                                 <td><select class="" data-placeholder="Select" name="healthy_condition_difficulties">
-                                                       
+
                                                         <option {{ ($ff->healthy_condition_difficulties ?? '' =='لا يوجد')? "selected" : '' }}>لا يوجد</option>
                                                         <option {{ ($ff->healthy_condition_difficulties ?? '' =='نعم, بعض الصعوبه')? "selected" : '' }}>نعم, بعض الصعوبه</option>
                                                         <option {{ ($ff->healthy_condition_difficulties ?? '' =='نعم,صعوبه كبيره')? "selected" : '' }}>نعم,صعوبه كبيره</option>
@@ -462,7 +461,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                 </td>
 
                                                 <td><select class="" data-placeholder="Select" name="health_insurance">
-                                                        
+
                                                         <option {{ ($ff->health_insurance ?? '' =='لا يوجد')? "selected" : '' }}>لا يوجد</option>
                                                         <option {{ ($ff->health_insurance ?? '' =='حكومي فقط')? "selected" : '' }}>حكومي فقط</option>
                                                         <option {{ ($ff->health_insurance ?? '' =='وكاله فقط')? "selected" : '' }}>وكاله فقط</option>
@@ -477,7 +476,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                 </td>
 
                                                 <td><select class="" data-placeholder="Select" name="disease">
-                                                        
+
                                                         <option {{ ($ff->disease ?? '' =='نعم')? "selected" : '' }}>نعم</option>
                                                         <option {{ ($ff->disease ?? '' =='لا')? "selected" : '' }}>لا</option>
 
@@ -488,7 +487,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
                                         </tbody>
                                     </table>
-                           
+
 
 
                                 </div>
@@ -713,7 +712,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
                             </fieldset>
 
-                           
+
 
                             <h3>وفيات الاسره خلال ال 12 شهر السابقه</h3>
                             <fieldset>
@@ -767,7 +766,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                         <option >ذكر</option>
                                                         <option >انثى</option>
                                                     </select></td>
-                                                <td><input type="number" class="" name="age"></td>
+                                                <td><input type="number" class="" name="age4"></td>
                                                 <td><select class="" data-placeholder="Select" name="Death_certificate">
                                                         <option >نعم</option>
                                                         <option >لا</option>
@@ -1287,45 +1286,45 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
     $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-    })   
+    })
 </script>
 
 <script>
 
     document.getElementById('wizard_with_validation').addEventListener('click', (e) => {
-      
+
         if (e.target.id === 'add') {
             e.preventDefault()
             Add(e)
         } else if (e.target.id === 'deleteBtn' ) {
- 
+
             e.preventDefault()
             myDeleteFunction(e)
         }
-        
+
     })
 </script>
 
 <script>
 // للوفيات
     document.getElementById('wizard_with_validation').addEventListener('click', (e) => {
-      
+
         if (e.target.id === 'add1') {
             e.preventDefault()
             Add_dead(e)
         } else if (e.target.id === 'delete1' ) {
- 
+
             e.preventDefault()
             myDeleteFunction_dead(e)
         }
-        
+
     })
 </script>
 
 <!-- <script>
 
     document.getElementById('age').addEventListener('change',checkAge);
-      
+
 </script> -->
 
     <script src="{{asset('assets/js/app.min.js')}}"></script>
