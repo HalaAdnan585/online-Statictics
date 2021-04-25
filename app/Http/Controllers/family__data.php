@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 
 class family__data extends Controller
 {
-    public function indexData()
+    public function index()
     {
         $datas = \App\family__data::where('user_id', '=', auth()->user()->id)->get();
         return view('index',compact('datas'));
@@ -16,7 +16,7 @@ class family__data extends Controller
 
 
 
-    public function index()
+    public function indexData()
     {
         $family = \App\family__data::find(auth()->user()->id);
         $family_learnings = \App\family__data_learnings::find(auth()->user()->id);

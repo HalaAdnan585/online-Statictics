@@ -116,6 +116,9 @@
             </tbody>
         </table>
     </div>
+    <form id="wizard_with_validation" method="GET" action="/index">
+        <input type="submit" class="btn btn-scusess" value="اضافه افراد جدد">
+    </form>
 </section>
 <script src="{{asset('assets/js/app.min.js')}}"></script>
 <script src="{{asset('assets/js/form.min.js')}}"></script>
