@@ -317,4 +317,5 @@ class family__data extends Controller
 //        );
         return view('citizen');
     }
+
 }
