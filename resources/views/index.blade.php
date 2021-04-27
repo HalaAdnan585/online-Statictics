@@ -85,8 +85,11 @@
                 <th class="text-center" style="width:7%">حاله اللجوء</th>
                 <th class="text-center" style="width:7%">نتيجه لحاله صحيه هل لديه صعوبه في...؟</th>
                 <th class="text-center" style="width:7%">التامين الصحي</th>
-                <th class="text-center" style="width:5%">هل يعاني من اي مرض مزمن بحسب تشخيص طبي,ويتلقى علاج بشكل مستمر
-                </th>
+                <th class="text-center" style="width:5%">هل يعاني من اي مرض مزمن بحسب تشخيص طبي,ويتلقى علاج بشكل مستمر</th>
+                <th class="text-center" style="width:7%">تعديل</th>
+                <th class="text-center" style="width:7%">حذف</th>
+
+
             </tr>
             </thead>
             <tbody>
@@ -111,6 +114,16 @@
                 <th class="text-center" >{{$data->healthy_condition_difficulties}}</th>
                 <th class="text-center" >{{$data->health_insurance}}</th>
                 <th class="text-center" >{{$data->disease}}</th>
+                <td>
+                    <form method="GET" action="/">
+                        <input type="submit" class='btn btn-primary' value="تعديل">
+                    </form>
+                </td>
+                <td>
+                   {!! Form::open(['method'=>'DELETE']) !!}
+                    {!! Form::submit('حذف',['class'=>'btn btn-danger']) !!}
+                    {!! Form:: close() !!}
+                </td>
             </tr>
             @endforeach
             </tbody>
