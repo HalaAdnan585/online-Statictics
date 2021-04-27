@@ -326,7 +326,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                         <form id="wizard_with_validation" method="post" action="/citizen">
                             @csrf
                             <input type="submit" class="btn btn-scusess" value="حفظ البيانات">
-                            <h3>لمحه هامه</h3>
+                            <h3>تعليمات هامه</h3>
                             <fieldset>
 
                                 <p>يعتبر التعداد العام للسكان والمساكن من أهم مصادر الإحصاءات السكانية حيث يمكن من خلاله
