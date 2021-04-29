@@ -38,22 +38,22 @@ class family__data extends Controller
     {
         // There are the information of the data base family__data
         $request->validate([
-            'name'=>'required',
-            'citizin_relationship' => 'required',
-            'citizin_gender' => 'required',
-            'citizin_age' => 'required',
-            'nationality' => 'required',
-            'id1'=>'required|unique:family__datas,id|max:9|min:9',
-            'placeOfMotherTimeInvidualBirth' => 'required',
-            'citizin_place'=> 'required',
-            'previous_place' => 'required',
-            'reason_change_residence' => 'required',
-            'religion' => 'required',
-            'asylum_status' => 'required',
-            'healthy_condition_difficulties' => 'required',
-            'health_insurance' => 'required',
-            'disease' => 'required',
-            'periodAt_theCurrent_residenceIn_fullTime' => 'required',
+            'name'=>'nullable',
+            'citizin_relationship' => 'nullable',
+            'citizin_gender' => 'nullable',
+            'citizin_age' => 'nullable',
+            'nationality' => 'nullable',
+            'id1'=>'nullable|unique:family__datas,id|max:9|min:9',
+            'placeOfMotherTimeInvidualBirth' => 'nullable',
+            'citizin_place'=> 'nullable',
+            'previous_place' => 'nullable',
+            'reason_change_residence' => 'nullable',
+            'religion' => 'nullable',
+            'asylum_status' => 'nullable',
+            'healthy_condition_difficulties' => 'nullable',
+            'health_insurance' => 'nullable',
+            'disease' => 'nullable',
+            'periodAt_theCurrent_residenceIn_fullTime' => 'nullable',
         ]);
         $store_family__data = new \App\family__data;
         $store_family__data->fullName = $request->name;

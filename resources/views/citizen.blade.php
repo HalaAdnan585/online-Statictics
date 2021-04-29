@@ -92,18 +92,18 @@ function  myDeleteFunction_dead(e) {
 //   else return" ";
 }
 
-// function checkAge(e){
+function checkAge(e){
 
-//     if(parseInt(e.target.value, 10) >= 3){
-//         document.getElementById("age").disabled=false;
-//         // console.log('bigger')
-//     } else {
-//         document.getElementById("Kindergarten1").disabled=true;
-//         document.getElementById("Kindergarten2").disabled=true;
-//         document.getElementById("meal").disabled=true;
-//         // console.log('smaller')
-//     }
-// }
+    if(parseInt(e.target.value, 10) >= 3){
+        document.getElementById("age").disabled=false;
+        // console.log('bigger')
+    } else {
+        document.getElementById("Kindergarten1").disabled=true;
+        document.getElementById("Kindergarten2").disabled=true;
+        document.getElementById("meal").disabled=true;
+        // console.log('smaller')
+    }
+}
 
 // function checkAge1(e){
 
@@ -120,13 +120,14 @@ function  myDeleteFunction_dead(e) {
 </script>
 
 <script>
-    function Add(e){
+    function Add(e){      
+    let table =document.getElementById('myTable')
     e.preventDefault();
     const markup=`<tr>
-    <th scope="row">1</th>
-    <td><input type="text" class="" name="FullName" id="FullName" value="{{ $id->name ?? ''}}" data-toggle="tooltip" data-placement="bottom" title="ادخل الاسم الرباعي"></td>
-    <td><input type="number" oninput="checkAge(event)" class="" name="age" id="age" value="{{$ff->age ?? ''}}"></td>
-    <td><select class="" data-placeholder="Select" name="relationship">
+    <th scope="row">${table.rows.length}</th>
+    <td><input type="text" class="" name="name${table.rows.length}" id="FullName"  data-toggle="tooltip" data-placement="bottom" title="ادخل الاسم الرباعي"></td>
+    <td><input type="number" oninput="checkAge(event)" class="" name="citizin_age${table.rows.length}" id="age" value="{{$ff->age ?? ''}}"></td>
+    <td><select class="" data-placeholder="Select" name="citizin_relationship${table.rows.length}">
 
         <option  {{ ($ff->relationShip ?? '' =='اخ/اخت')? "selected" : '' }}>اخ/اخت</option>
         <option  {{ ($ff->relationShip ?? '' =='ابن/ابنه')? "selected" : '' }}>ابن/ابنه</option>
@@ -139,22 +140,21 @@ function  myDeleteFunction_dead(e) {
 
     </select>
     </td>
-    <td><select class="" data-placeholder="Select" name="gender">
-    <!-- <option disabled selected>16-المصدر الرئيسي للطاقه المستخدمة في التدفئة</option> -->
+    <td><select class="" data-placeholder="Select" name="citizin_gender${table.rows.length}">
     <option id="meal" {{ ($ff->gender ?? '' =='انثى')? "selected" : '' }}>انثى</option>
     <option {{ ($ff->gender ?? '' =='ذكر')? "selected" : '' }}>ذكر</option>
 
     </select>
     </td>
 
-    <td><input type="text" class="" name="nationality" value="{{$ff->nationality ?? ''}}"></td>
-    <td><input type="number" class="" name="id" value="{{ $id->id  ?? ''}}"></td>
-    <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}"></td>
-    <td><input type="text" class="" name="place" value="{{ $id->place  ?? ''}}"></td>
-    <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}"></td>
-    <td><input type="text" class="" name="previous_place" value="{{$ff->previous_place ?? ''}}"></td>
+    <td><input type="text" class="" name="nationality${table.rows.length}" value="{{$ff->nationality ?? ''}}" title="الفلسطيني الذي له جنسيه اخرى يكتب فلسطيني"></td>
+    <td><input type="number" class="" name="id1${table.rows.length}" value="{{ $id->id  ?? ''}}"title="للفلسطينيين فقط"></td>
+    <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth${table.rows.length}" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}"title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
+    <td><input type="text" class="" name="citizin_place${table.rows.length}" value="{{ $id->place  ?? ''}}" title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
+    <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime${table.rows.length}" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}"></td>
+    <td><input type="text" class="" name="previous_place${table.rows.length}" value="{{$ff->previous_place ?? ''}}"title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
 
-    <td><select class="" data-placeholder="Select" name="reason_change_residence">
+    <td><select class="" data-placeholder="Select" name="reason_change_residence${table.rows.length}">
 
             <option disabled {{ ($ff->reason_change_residence ?? '' =='العمل')? "selected" : '' }}>العمل</option>
             <option disabled {{ ($ff->reason_change_residence ?? '' =='الدراسه')? "selected" : '' }}>الدراسه</option>
@@ -170,7 +170,7 @@ function  myDeleteFunction_dead(e) {
     </select>
     </td>
 
-    <td><select class="" data-placeholder="Select" name="religion">
+    <td><select class="" data-placeholder="Select" name="religion${table.rows.length}">
 
         <option {{ ($ff->religion ?? '' =='مسيحي')? "selected" : '' }}>مسيحي</option>
         <option {{ ($ff->religion ?? '' =='مسلم')? "selected" : '' }}>مسلم</option>
@@ -179,7 +179,7 @@ function  myDeleteFunction_dead(e) {
     </select>
     </td>
 
-    <td><select class="" data-placeholder="Select" name="asylum_status">
+    <td><select class="" data-placeholder="Select" name="asylum_status${table.rows.length}">
 
         <option {{ ($ff->asylum_status ?? '' =='لاجئ مسجل')? "selected" : '' }}>لاجئ مسجل</option>
         <option {{ ($ff->asylum_status ?? '' =='لاجئ غير مسجل')? "selected" : '' }}>لاجئ غير مسجل</option>
@@ -188,7 +188,7 @@ function  myDeleteFunction_dead(e) {
     </select>
     </td>
 
-    <td><select class="" data-placeholder="Select" name="healthy_condition_difficulties">
+    <td><select class="" data-placeholder="Select" name="healthy_condition_difficulties${table.rows.length}">
 
         <option {{ ($ff->healthy_condition_difficulties ?? '' =='لا يوجد')? "selected" : '' }}>لا يوجد</option>
         <option {{ ($ff->healthy_condition_difficulties ?? '' =='نعم, بعض الصعوبه')? "selected" : '' }}>نعم, بعض الصعوبه</option>
@@ -198,7 +198,7 @@ function  myDeleteFunction_dead(e) {
     </select>
     </td>
 
-    <td><select class="" data-placeholder="Select" name="health_insurance">
+    <td><select class="" data-placeholder="Select" name="health_insurance${table.rows.length}">
 
         <option {{ ($ff->health_insurance ?? '' =='لا يوجد')? "selected" : '' }}>لا يوجد</option>
         <option {{ ($ff->health_insurance ?? '' =='حكومي فقط')? "selected" : '' }}>حكومي فقط</option>
@@ -213,7 +213,7 @@ function  myDeleteFunction_dead(e) {
     </select>
     </td>
 
-    <td><select class="" data-placeholder="Select" name="disease">
+    <td><select class="" data-placeholder="Select" name="disease${table.rows.length}">
 
     <option {{ ($ff->disease ?? '' =='نعم')? "selected" : '' }}>نعم</option>
     <option {{ ($ff->disease ?? '' =='لا')? "selected" : '' }}>لا</option>
@@ -228,11 +228,12 @@ function  myDeleteFunction_dead(e) {
 
 
      function Add_dead(e){
+        let table =document.getElementById('dead_table}')
         e.preventDefault();
         const markup=` <tr>
-    <th scope="row">1</th>
-    <td><input type="name" class="" name="Full_name_dead"></td>
-    <td><select class="" data-placeholder="Select" name="relationship">
+    <th scope="row">${table.rows.length}</th>
+    <td><input type="name" class="" name="Full_name_dead${table.rows.length}"></td>
+    <td><select class="" data-placeholder="Select" name="relationship${table.rows.length}">
 
             <option >رب الاسره </option>
             <option >زوجه/زوج</option>
@@ -245,12 +246,12 @@ function  myDeleteFunction_dead(e) {
             <option >اخرون</option>
         </select>
     </td>
-    <td><select class="" data-placeholder="Select" name="gender">
+    <td><select class="" data-placeholder="Select" name="gender${table.rows.length}">
             <option >ذكر</option>
             <option >انثى</option>
         </select></td>
-    <td><input type="number" class="" name="age2"></td>
-    <td><select class="" data-placeholder="Select" name="Death_certificate">
+    <td><input type="number" class="" name="age2${table.rows.length}"></td>
+    <td><select class="" data-placeholder="Select" name="Death_certificate${table.rows.length}">
             <option >نعم</option>
             <option >لا</option>
             <!-- <option >تدريب مهني اقل من 6 شهور</option>
@@ -260,7 +261,7 @@ function  myDeleteFunction_dead(e) {
             <option >تدريب مهني1-2 سنه(مع خبره)</option>
             <option >الالتحاق بمدرسه صناعيه/مهنيه(مع خبره)</option> -->
         </select></td>
-    <td><select class="" data-placeholder="Select" name="marriage_status">
+    <td><select class="" data-placeholder="Select" name="marriage_status${table.rows.length}">
             <option >لم يتزوج ابدا</option>
             <option >عقد لاول مره</option>
             <option >متزوج</option>
@@ -269,22 +270,22 @@ function  myDeleteFunction_dead(e) {
             <option >منفصل</option>
         </select>
     </td>
-    <td><select class="" data-placeholder="Select" name="pregnant_at_time_of_death">
+    <td><select class="" data-placeholder="Select" name="pregnant_at_time_of_death${table.rows.length}">
             <option >نعم</option>
             <option >لا</option>
         </select>
     </td>
-    <td><select class="" data-placeholder="Select" name="death_during_childbirth">
+    <td><select class="" data-placeholder="Select" name="death_during_childbirth${table.rows.length}">
 
             <option >نعم</option>
             <option >لا</option>
 
         </select></td>
-    <td><select class="" data-placeholder="Select" name="death_during_the_42_days_of_birth">
+    <td><select class="" data-placeholder="Select" name="death_during_the_42_days_of_birth${table.rows.length}">
             <option >نعم</option>
             <option >لا</option>
         </select></td>
-    <td><select class="" data-placeholder="Select" name="Death_due_accident">
+    <td><select class="" data-placeholder="Select" name="Death_due_accident${table.rows.length}">
             <option >نعم</option>
             <option >لا</option>
         </select></td>
@@ -326,7 +327,11 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                         <form id="wizard_with_validation" method="post" action="/citizen">
                             @csrf
                             <input type="submit" class="btn btn-scusess" value="حفظ البيانات">
+<<<<<<< HEAD
                             <h3>تعليمات هامه جدا</h3>
+=======
+                            <h3>تعليمات هامه</h3>
+>>>>>>> master
                             <fieldset>
 
                                 <p>يعتبر التعداد العام للسكان والمساكن من أهم مصادر الإحصاءات السكانية حيث يمكن من خلاله
@@ -409,12 +414,12 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                                                     </select>
                                                 </td>
 
-                                                <td><input type="text" class="" name="nationality" value="{{$ff->nationality ?? ''}}"></td>
-                                                <td><input type="number" class="" name="id1" ></td>
-                                                <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}"></td>
-                                                <td><input type="text" class="" name="citizin_place" value="{{ $id->place  ?? ''}}"></td>
-                                                <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}"></td>
-                                                <td><input type="text" class="" name="previous_place" value="{{$ff->previous_place ?? ''}}"></td>
+                                                <td><input type="text" class="" name="nationality" value="{{$ff->nationality ?? ''}}" title="الفلسطيني الذي له جنسيه اخرى يكتب فلسطيني"></td>
+                                                <td><input type="number" class="" name="id1" title="للفلسطينيين فقط" ></td>
+                                                <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}" title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
+                                                <td><input type="text" class="" name="citizin_place" value="{{ $id->place  ?? ''}}"title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
+                                                <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}" ></td>
+                                                <td><input type="text" class="" name="previous_place" value="{{$ff->previous_place ?? ''}}"title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
 
                                                 <td><select class="" data-placeholder="Select" name="reason_change_residence">
 
