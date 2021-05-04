@@ -78,14 +78,16 @@
                 <th class="text-center" style="width:5%">رقم الهويه</th>
                 <th class="text-center" style="width:4%">مكان اقامه الام وقت الولاده</th>
                 <th class="text-center" style="width:4%">مكان الاقامه المعتاده الحاليه</th>
-                <th class="text-center" style="width:5%">مده الاقامه في مكان الاقامه الحاليه المعتاده بالسنوات الكامله</th>
+                <th class="text-center" style="width:5%">مده الاقامه في مكان الاقامه الحاليه المعتاده بالسنوات الكامله
+                </th>
                 <th class="text-center" style="width:5%">مكان الاقامه المعتاده السابقه للحاليه(ان وجدت)</th>
                 <th class="text-center" style="width:10%">سبب تغيير مكان الاقامه السابق</th>
                 <th class="text-center" style="width:4%">الديانه</th>
                 <th class="text-center" style="width:7%">حاله اللجوء</th>
                 <th class="text-center" style="width:7%">نتيجه لحاله صحيه هل لديه صعوبه في...؟</th>
                 <th class="text-center" style="width:7%">التامين الصحي</th>
-                <th class="text-center" style="width:5%">هل يعاني من اي مرض مزمن بحسب تشخيص طبي,ويتلقى علاج بشكل مستمر</th>
+                <th class="text-center" style="width:5%">هل يعاني من اي مرض مزمن بحسب تشخيص طبي,ويتلقى علاج بشكل مستمر
+                </th>
                 <th class="text-center" style="width:7%">تعديل</th>
                 <th class="text-center" style="width:7%">حذف</th>
 
@@ -96,35 +98,38 @@
             {{$num=0}}
             @foreach($datas as $data)
                 {{$num++}}
-            <tr>
-                <th class="text-center" >{{$num}}</th>
-                <th class="text-center" >{{$data->fullName}}</th>
-                <th class="text-center" >{{$data->age}}</th>
-                <th class="text-center" >{{$data->relationShip}}</th>
-                <th class="text-center" >{{$data->gender}}</th>
-                <th class="text-center" >{{$data->nationality}}</th>
-                <th class="text-center" >{{$data->id}}</th>
-                <th class="text-center" >{{$data->placeOfMotherTimeInvidualBirth}}</th>
-                <th class="text-center" >{{$data->place}}</th>
-                <th class="text-center" >{{$data->periodAt_theCurrent_residenceIn_fullTime}}</th>
-                <th class="text-center" >{{$data->previous_place}}</th>
-                <th class="text-center" >{{$data->reason_change_residence}}</th>
-                <th class="text-center" >{{$data->religion}}</th>
-                <th class="text-center" >{{$data->asylum_status}}</th>
-                <th class="text-center" >{{$data->healthy_condition_difficulties}}</th>
-                <th class="text-center" >{{$data->health_insurance}}</th>
-                <th class="text-center" >{{$data->disease}}</th>
-                <td>
-                    <form method="GET" action="/">
-                        <input type="submit" class='btn btn-primary' value="تعديل">
-                    </form>
-                </td>
-                <td>
-                   {!! Form::open(['method'=>'DELETE']) !!}
-                    {!! Form::submit('حذف',['class'=>'btn btn-danger']) !!}
-                    {!! Form:: close() !!}
-                </td>
-            </tr>
+                <tr>
+                    <th class="text-center">{{$num}}</th>
+                    <th class="text-center">{{$data->fullName}}</th>
+                    <th class="text-center">{{$data->age}}</th>
+                    <th class="text-center">{{$data->relationShip}}</th>
+                    <th class="text-center">{{$data->gender}}</th>
+                    <th class="text-center">{{$data->nationality}}</th>
+                    <th class="text-center">{{$data->id}}</th>
+                    <th class="text-center">{{$data->placeOfMotherTimeInvidualBirth}}</th>
+                    <th class="text-center">{{$data->place}}</th>
+                    <th class="text-center">{{$data->periodAt_theCurrent_residenceIn_fullTime}}</th>
+                    <th class="text-center">{{$data->previous_place}}</th>
+                    <th class="text-center">{{$data->reason_change_residence}}</th>
+                    <th class="text-center">{{$data->religion}}</th>
+                    <th class="text-center">{{$data->asylum_status}}</th>
+                    <th class="text-center">{{$data->healthy_condition_difficulties}}</th>
+                    <th class="text-center">{{$data->health_insurance}}</th>
+                    <th class="text-center">{{$data->disease}}</th>
+                    <td>
+                        <form method="GET" action="/edit/{{$data->id}}">
+                            <input type="submit" class='btn btn-primary' value="تعديل">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="GET" action="/delete/{{$data->id}}">
+                            <input type="submit" class='btn btn-danger' value="حذف">
+                        </form>
+{{--                        {!! Form::open(['method'=>'DELETE','action'=>['family__data@destroy ',$data->id]])!!}--}}
+{{--                        {!! Form::submit('حذف',['class'=>'btn btn-danger']) !!}--}}
+{{--                        {!! Form:: close() !!}--}}
+                    </td>
+                </tr>
             @endforeach
             </tbody>
         </table>

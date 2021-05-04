@@ -38,11 +38,14 @@ Route::post('/email/checkEmail', "LoginController@checkEmail");
 Route::group(['middleware'=>'auth'],function (){
    Route::get('/citizen', "family__data@index");
     Route::post('/citizen', "family__data@storeCitizen");
+    Route::get('/delete/{id}', "family__data@destroy");
+    Route::post('/update/{id}', "family__data@update");
+    Route::get('/edit/{id}', "family__data@edit");
     Route::get('/index', "family__data@indexData");
 
-//    Route::get('/index', function () {
-//        return view('index');
-//    });
+    Route::get('/edit_citizen', function () {
+        return view('edit_citizen');
+    });
 //
 //    Route::get('/index', function () {
 //        return view('index');
