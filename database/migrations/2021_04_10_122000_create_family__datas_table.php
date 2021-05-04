@@ -14,22 +14,23 @@ class CreateFamilyDatasTable extends Migration
     public function up()
     {
         Schema::create('family__datas', function (Blueprint $table) {
-            $table->id()->nullable();
+            $table->id();
             $table->string('fullName');
-            $table->string('relationShip')->nullable();
-            $table->string('gender')->nullable();
-            $table->integer('age')->nullable();
-            $table->string('nationality')->nullable();
-            $table->string('placeOfMotherTimeInvidualBirth')->nullable();
-            $table->string('place')->nullable();
-            $table->float('periodAt_theCurrent_residenceIn_fullTime', 3, 1)->nullable();
-            $table->string('previous_place')->nullable();
-            $table->string('reason_change_residence')->nullable();
-            $table->string('religion')->nullable();
-            $table->string('asylum_status')->nullable();
-            $table->string('healthy_condition_difficulties')->nullable();
-            $table->string('health_insurance')->nullable();
-            $table->string('disease')->nullable();
+            $table->string('relationShip');
+            $table->string('gender');
+            $table->integer('age');
+            $table->string('nationality');
+            $table->string('placeOfMotherTimeInvidualBirth');
+            $table->string('place');
+            $table->float('periodAt_theCurrent_residenceIn_fullTime', 3, 1);
+            
+            $table->string('previous_place');
+            $table->string('reason_change_residence');
+            $table->string('religion');
+            $table->string('asylum_status');
+            $table->string('healthy_condition_difficulties');
+            $table->string('health_insurance');
+            $table->string('disease');
             $table->timestamps();
         });
     }

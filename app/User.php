@@ -78,4 +78,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(housing_data_dead::class);
     }
+    public function verifyUser()
+{
+  return $this->hasOne('App\VerifyUser');
+}
 }

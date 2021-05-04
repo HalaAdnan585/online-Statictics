@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use App\User;//model
+use App\VerifyUser;
+use App\Mail\VerifyMail;
+use App\Day;
 use DB;
 use App;
 use Auth;
@@ -38,15 +41,16 @@ class LoginController extends Controller
 
             $user_data = array(
                 'email'  => $request->input('email'),
-                'password' => $request->input('password')
+                'password' => $request->input('password'),
+                'verified'=>'1'
             );
 
             if(Auth::attempt($user_data)){
 
-                if(Auth::user()->privilige=="مواطن"){
-                    return redirect('/citizen');
+               if(Auth::user()->privilige=="مواطن"){
+                    return redirect(route('citizen',country()));
                 }else if(Auth::user()->privilige=="موظف"){
-                    return redirect('/index');
+                    return redirect(route('index',country()));
                 }
             
             }else{
@@ -58,7 +62,11 @@ class LoginController extends Controller
 
     public function register()
     {
-        return view('register');
+          $now = date('Y-m-d');
+        $city=Day::select('place','start','end')->where('start','<=',$now)->where('end','>=',$now)->first();
+        $cityAll=Day::select('place','start','end')->get();
+
+        return view('register',['city'=>$city,'cityAll'=>$cityAll]);
     }
 
     public function checkRegister(Request $request){
@@ -68,10 +76,10 @@ class LoginController extends Controller
             'secondName' => ['required', 'regex:/(^([\p{Arabic} ]+)?$)/u', 'min:2','max:15'],
             'thirdName' => ['required', 'regex:/(^([\p{Arabic} ]+)?$)/u', 'min:2','max:15'],
             'fourthName' => ['required', 'regex:/(^([\p{Arabic} ]+)?$)/u', 'min:2','max:15'],
-            'id' => ['required', 'regex:/(^([0-9 ]+)?$)/u', 'size:9'],
-            'city' => ['required', 'regex:/(^([\p{Arabic} ]+)?$)/u'],
-            'phoneNum' => ['required', 'regex:/(^([0-9 ]+)?$)/u', 'size:10'],
-            'email' => ['required', 'email'],
+            'id' => ['required', 'regex:/(^([0-9 ]+)?$)/u', 'size:9','unique:users'],
+            // 'city' => ['required', 'regex:/(^([\p{Arabic} ]+)?$)/u'],
+            'mobile' => ['required', 'regex:/(^([0-9 ]+)?$)/u', 'size:10','unique:users'],
+            'email' => ['required', 'email','unique:users'],
             'password' => ['required', 'regex:/(^([a-zA-z0-9 ]+)?$)/u', 'min:8','max:25']
 
           ];
@@ -101,8 +109,8 @@ class LoginController extends Controller
            'id.regex' => ' الرقم الوطني يجب ان يتكون من ارقام فقط.',
            'id.size' => ' الرقم الوطني يجب ان يتكون من 9 خانات.',
 
-           'city.required' =>'المحافظه يجب ان لا يترك فارغ',
-           'city.regex' =>'المحافظه يجب ان يحتوي على احرف فقط',
+        //   'city.required' =>'المحافظه يجب ان لا يترك فارغ',
+        //   'city.regex' =>'المحافظه يجب ان يحتوي على احرف فقط',
 
            'phoneNum.required' => ' رقم الهاتف يجب ان لا يترك فارغاً.',
            'phoneNum.regex' => ' رقم الهاتف يجب ان يتكون من ارقام فقط.',
@@ -120,29 +128,61 @@ class LoginController extends Controller
           ];
     
           $this->validate($request, $rules, $customMessages);
-
-            $users = new User;
+          $now = date('Y-m-d');
+           $city=App\Day::select('place')->where('start','<=',$now)->where('end','>=',$now)->first();
+          
+            $user = new User;
             $firstName= $request->input('firstName');
             $secondName= $request->input('secondName');
             $thirdName= $request->input('thirdName');
             $fourthName= $request->input('fourthName');
 
-            $users->name = $firstName . " " . $secondName . " " . $thirdName . " " . $fourthName;
-            $users->id= $request->input('id');
-            $users->place= $request->input('city');
-            $users->mobile= $request->input('phoneNum');
-            $users->email= $request->input('email');
-            $users->password= Hash::make($request->input('password'));
-            $users->privilige= "مواطن";
+            $user->name = $firstName . " " . $secondName . " " . $thirdName . " " . $fourthName;
+            $user->id= $request->input('id');
+           $user->place=$city->place;
+            $user->mobile= $request->input('mobile');
+            $user->email= $request->input('email');
+            $user->password= Hash::make($request->input('password'));
+            $user->privilige= "مواطن";
 
-            if($users->save()){
+            if($user->save()){
+                $verifyUser = VerifyUser::create([
+                'user_id' => $user->id,
+                'token' => sha1(time())
+                ]);
+                // \Mail::to($user->email)->send(new VerifyMail($user));
+                
+                $to_name = $firstName . " " . $secondName . " " . $thirdName . " " . $fourthName;
+                $to_email = $request->input('email');
+                // $data = array('users'=>$users);
+                \Mail::send('emails.verifyUser', ['user'=>$user], function($message) use ($to_name, $to_email) {
+                    $message->to($to_email, $to_name)->subject('conformation email');
+                    $message->from('onlinestatistics585@gmail.com','conformation email');
+                });
 
-                return redirect('/login');
+                return redirect(route('confirmation',country()))->with('status', 'أرسلنا لك رمز التفعيل. تحقق من بريدك الإلكتروني وانقر على الرابط للتحقق.');
             
             }else{
                 return back()->with('error', 'خطأ في انشاء الحساب.');
             }
 
+    }
+     public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+        if(isset($verifyUser) ){
+            $user = $verifyUser->user;
+            if(!$user->verified) {
+                $verifyUser->user->verified = 1;
+                $verifyUser->user->save();
+                $status = "تم التحقق من بريدك الإلكتروني. يمكنك الآن تسجيل الدخول.";
+            } else {
+                $status = "تم التحقق من بريدك الإلكتروني بالفعل. يمكنك الآن تسجيل الدخول.";
+            }
+        } else {
+            return redirect(route('login',country()))->with('warning', "آسف لا يمكن تحديد البريد الإلكتروني الخاص بك.");
+        }
+        return redirect(route('login',country()))->with('status', $status);
     }
 
     public function email()

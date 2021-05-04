@@ -120,7 +120,7 @@ function checkAge(e){
 </script>
 
 <script>
-    function Add(e){
+    function Add(e){      
     let table =document.getElementById('myTable')
     e.preventDefault();
     const markup=`<tr>
@@ -148,7 +148,7 @@ function checkAge(e){
     </td>
 
     <td><input type="text" class="" name="nationality${table.rows.length}" value="{{$ff->nationality ?? ''}}" title="الفلسطيني الذي له جنسيه اخرى يكتب فلسطيني"></td>
-    <td><input type="number" class="" name="id1${table.rows.length}" value=""title="للفلسطينيين فقط"></td>
+    <td><input type="number" class="" name="id1${table.rows.length}" value="{{ $id->id  ?? ''}}"title="للفلسطينيين فقط"></td>
     <td><input type="text" class="" name="placeOfMotherTimeInvidualBirth${table.rows.length}" value="{{$ff->placeOfMotherTimeInvidualBirth ?? ''}}"title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
     <td><input type="text" class="" name="citizin_place${table.rows.length}" value="{{ $id->place  ?? ''}}" title="اسم التجمع/المحافظةأواسم الدولة في الخارج"></td>
     <td><input type="number" class="" name="periodAt_theCurrent_residenceIn_fullTime${table.rows.length}" value="{{$ff->periodAt_theCurrent_residenceIn_fullTime ?? ''}}"></td>
@@ -221,8 +221,6 @@ function checkAge(e){
 
     </select>
     </td>
-
-
     </tr>`
     document.getElementById('myTable').insertAdjacentHTML('beforeend',markup)
 
@@ -329,11 +327,7 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                         <form id="wizard_with_validation" method="post" action="/citizen">
                             @csrf
                             <input type="submit" class="btn btn-scusess" value="حفظ البيانات">
-
-
-
                             <h3>تعليمات هامه</h3>
-
                             <fieldset>
 
                                 <p>يعتبر التعداد العام للسكان والمساكن من أهم مصادر الإحصاءات السكانية حيث يمكن من خلاله
@@ -486,16 +480,13 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
 
                                                         <option {{ ($ff->disease ?? '' =='نعم')? "selected" : '' }}>نعم</option>
                                                         <option {{ ($ff->disease ?? '' =='لا')? "selected" : '' }}>لا</option>
+
+
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <input type="text" id="citizen_count" name="citizin_count" value="1">
-                                                </td>
-
                                             </tr>
 
                                         </tbody>
-
                                     </table>
 
 
@@ -1288,79 +1279,6 @@ document.getElementById('dead_table').insertAdjacentHTML('beforeend',markup) };
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="body table-responsive">
-            <h1> الافراد المسجلون من قبل</h1>
-            @if(Session::has('deleted_citizen'))
-                <p class="bg-danger">{{session('deleted_citizen')}}</p>
-            @endif
-            @if(Session::has('updated_citizen'))
-                <p class="bg-danger">{{session('updated_citizen')}}</p>
-            @endif
-            <table class="table table-bordered" id="myTable" style="overflow-x: scroll !important;min-width:300% !important;" >
-            <thead>
-            <tr>
-                <th class="text-center" style="width:1%">رقم الفرد</th>
-                <th class="text-center" style="width:10%">الاسم الرباعي</th>
-                <th class="text-center" style="width:5%">العمر بالسنوات الكامله(الاطفال الاقل من سنه يوضع 0)</th>
-                <th class="text-center" style="width:6%">العلاقه برب الاسره</th>
-                <th class="text-center" style="width:4%">الجنس</th>
-                <th class="text-center" style="width:5%">الجنسيه الاصليه</th>
-                <th class="text-center" style="width:5%">رقم الهويه</th>
-                <th class="text-center" style="width:4%">مكان اقامه الام وقت الولاده</th>
-                <th class="text-center" style="width:4%">مكان الاقامه المعتاده الحاليه</th>
-                <th class="text-center" style="width:5%">مده الاقامه في مكان الاقامه الحاليه المعتاده بالسنوات الكامله
-                </th>
-                <th class="text-center" style="width:5%">مكان الاقامه المعتاده السابقه للحاليه(ان وجدت)</th>
-                <th class="text-center" style="width:10%">سبب تغيير مكان الاقامه السابق</th>
-                <th class="text-center" style="width:4%">الديانه</th>
-                <th class="text-center" style="width:7%">حاله اللجوء</th>
-                <th class="text-center" style="width:7%">نتيجه لحاله صحيه هل لديه صعوبه في...؟</th>
-                <th class="text-center" style="width:7%">التامين الصحي</th>
-                <th class="text-center" style="width:5%">هل يعاني من اي مرض مزمن بحسب تشخيص طبي,ويتلقى علاج بشكل مستمر
-                </th>
-                <th class="text-center" style="width:7%">تعديل</th>
-                <th class="text-center" style="width:7%">حذف</th>
-
-
-            </tr>
-            </thead>
-            <tbody>
-            {{$num=0}}
-            @foreach($datas as $data)
-                {{$num++}}
-                <tr>
-                    <th class="text-center">{{$num}}</th>
-                    <th class="text-center">{{$data->fullName}}</th>
-                    <th class="text-center">{{$data->age}}</th>
-                    <th class="text-center">{{$data->relationShip}}</th>
-                    <th class="text-center">{{$data->gender}}</th>
-                    <th class="text-center">{{$data->nationality}}</th>
-                    <th class="text-center">{{$data->id}}</th>
-                    <th class="text-center">{{$data->placeOfMotherTimeInvidualBirth}}</th>
-                    <th class="text-center">{{$data->place}}</th>
-                    <th class="text-center">{{$data->periodAt_theCurrent_residenceIn_fullTime}}</th>
-                    <th class="text-center">{{$data->previous_place}}</th>
-                    <th class="text-center">{{$data->reason_change_residence}}</th>
-                    <th class="text-center">{{$data->religion}}</th>
-                    <th class="text-center">{{$data->asylum_status}}</th>
-                    <th class="text-center">{{$data->healthy_condition_difficulties}}</th>
-                    <th class="text-center">{{$data->health_insurance}}</th>
-                    <th class="text-center">{{$data->disease}}</th>
-                    <td>
-                        <form method="GET" action="/edit/{{$data->id}}">
-                            <input type="submit" class='btn btn-primary' value="تعديل">
-                        </form>
-                    </td>
-                    <td>
-                        <form method="GET" action="/delete/{{$data->id}}">
-                            <input type="submit" class='btn btn-danger' value="حذف">
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
         </div>
         </div>
     </section>

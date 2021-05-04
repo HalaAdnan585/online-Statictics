@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Session;
 
 
 class family__data extends Controller
 {
-    public function indexData()
+    public function index()
     {
         $datas = \App\family__data::where('user_id', '=', auth()->user()->id)->get();
         return view('index',compact('datas'));
@@ -17,11 +16,8 @@ class family__data extends Controller
 
 
 
-    public function index()
+    public function indexData()
     {
-        $datas = \App\family__data::where('user_id', '=', auth()->user()->id)->get();
-
-
         $family = \App\family__data::find(auth()->user()->id);
         $family_learnings = \App\family__data_learnings::find(auth()->user()->id);
         $family_works = \App\family__data_works::find(auth()->user()->id);
@@ -35,12 +31,11 @@ class family__data extends Controller
             'family_marriages' => $family_marriages,
             'housing_data' => $housing_data,
         );
-        return view('citizen',compact('datas'))->with($data);
+        return view('citizen')->with($data);
     }
 
     public function storeCitizen(Request $request)
     {
-
         // There are the information of the data base family__data
         $request->validate([
             'name'=>'nullable',
@@ -66,6 +61,7 @@ class family__data extends Controller
         $store_family__data->gender =  $request->citizin_gender;
         $store_family__data->age =  $request->citizin_age;
         $store_family__data->nationality =  $request->nationality;
+
         $store_family__data->placeOfMotherTimeInvidualBirth =  $request->placeOfMotherTimeInvidualBirth;
         $store_family__data->previous_place =  $request->previous_place;
         $store_family__data->reason_change_residence =  $request->reason_change_residence;
@@ -80,76 +76,6 @@ class family__data extends Controller
         $store_family__data->user_id = auth()->user()->id;
         $store_family__data->save();
 
-
-        if (isset($request->name2)) {
-            $store_family__data2 = new \App\family__data;
-            $store_family__data2->fullName = $request->name2;
-            $store_family__data2->relationship = $request->citizin_relationship2;
-            $store_family__data2->gender =  $request->citizin_gender2;
-            $store_family__data2->age =  $request->citizin_age2;
-            $store_family__data2->nationality =  $request->nationality2;
-            $store_family__data2->placeOfMotherTimeInvidualBirth =  $request->placeOfMotherTimeInvidualBirth2;
-            $store_family__data2->previous_place =  $request->previous_place2;
-            $store_family__data2->reason_change_residence =  $request->reason_change_residence2;
-            $store_family__data2->religion =  $request->religion2;
-            $store_family__data2->asylum_status =  $request->asylum_status2;
-            $store_family__data2->healthy_condition_difficulties =  $request->healthy_condition_difficulties2;
-            $store_family__data2->health_insurance =  $request->health_insurance2;
-            $store_family__data2->disease =  $request->disease2;
-            $store_family__data2->place = $request->citizin_place2;
-            $store_family__data2->periodAt_theCurrent_residenceIn_fullTime =  $request->periodAt_theCurrent_residenceIn_fullTime2;
-            $store_family__data2->id = $request->id12;
-            $store_family__data2->user_id = auth()->user()->id;
-            $store_family__data2->save();
-
-        }
-
-        if (isset($request->name3)) {
-            $store_family__data3 = new \App\family__data;
-            $store_family__data3->fullName = $request->name3;
-            $store_family__data3->relationship = $request->citizin_relationship3;
-            $store_family__data3->gender =  $request->citizin_gender3;
-            $store_family__data3->age =  $request->citizin_age3;
-            $store_family__data3->nationality =  $request->nationality3;
-            $store_family__data3->placeOfMotherTimeInvidualBirth =  $request->placeOfMotherTimeInvidualBirth3;
-            $store_family__data3->previous_place =  $request->previous_place2;
-            $store_family__data3->reason_change_residence =  $request->reason_change_residence3;
-            $store_family__data3->religion =  $request->religion3;
-            $store_family__data3->asylum_status =  $request->asylum_status3;
-            $store_family__data3->healthy_condition_difficulties =  $request->healthy_condition_difficulties3;
-            $store_family__data3->health_insurance =  $request->health_insurance3;
-            $store_family__data3->disease =  $request->disease3;
-            $store_family__data3->place = $request->citizin_place3;
-            $store_family__data3->periodAt_theCurrent_residenceIn_fullTime =  $request->periodAt_theCurrent_residenceIn_fullTime3;
-            $store_family__data3->id = $request->id13;
-            $store_family__data3->user_id = auth()->user()->id;
-            $store_family__data3->save();
-
-        }
-
-        if (isset($request->name4)) {
-
-            $store_family__data4 = new \App\family__data;
-            $store_family__data4->fullName = $request->name4;
-            $store_family__data4->relationship = $request->citizin_relationship4;
-            $store_family__data4->gender =  $request->citizin_gender4;
-            $store_family__data4->age =  $request->citizin_age4;
-            $store_family__data4->nationality =  $request->nationality4;
-            $store_family__data4->placeOfMotherTimeInvidualBirth =  $request->placeOfMotherTimeInvidualBirth4;
-            $store_family__data4->previous_place =  $request->previous_place4;
-            $store_family__data4->reason_change_residence =  $request->reason_change_residence4;
-            $store_family__data4->religion =  $request->religion4;
-            $store_family__data4->asylum_status =  $request->asylum_status4;
-            $store_family__data4->healthy_condition_difficulties =  $request->healthy_condition_difficulties4;
-            $store_family__data4->health_insurance =  $request->health_insurance4;
-            $store_family__data4->disease =  $request->disease4;
-            $store_family__data4->place = $request->citizin_place4;
-            $store_family__data4->periodAt_theCurrent_residenceIn_fullTime =  $request->periodAt_theCurrent_residenceIn_fullTime4;
-            $store_family__data4->id = $request->id14;
-            $store_family__data4->user_id = auth()->user()->id;
-            $store_family__data4->save();
-
-        }
         // There are the information of the data base family__data_learnings
 //        $field_family__data_learnings = request()->validate([
 //            'enroll_education' => 'required',
@@ -389,49 +315,7 @@ class family__data extends Controller
 //            'family_marriages' => $family_marriages,
 //            'housing_data' => $find_housing_datas,
 //        );
-        return redirect('/citizen');
-    }
-
-    public function edit($id)
-    {
-        $citizen = \App\family__data::findOrfail($id);
-
-       return view('edit_citizen',compact('citizen'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $data = \App\family__data::findOrfail($id);
-        $data ->update([
-        'fullName' => $request->name,
-        'relationship' =>$request->citizin_relationship,
-        'gender' =>  $request->citizin_gender,
-        'age' =>  $request->citizin_age,
-        'nationality' =>  $request->nationality,
-        'placeOfMotherTimeInvidualBirth' =>  $request->placeOfMotherTimeInvidualBirth,
-        'previous_place' =>  $request->previous_place,
-       'reason_change_residence' =>  $request->reason_change_residence,
-        'religion' =>  $request->religion,
-        'asylum_status' => $request->asylum_status,
-        'healthy_condition_difficulties' =>  $request->healthy_condition_difficulties,
-        'health_insurance' =>  $request->health_insurance,
-        'disease' =>  $request->disease,
-        'place' => $request->citizin_place,
-        'periodAt_theCurrent_residenceIn_fullTime'=>  $request->periodAt_theCurrent_residenceIn_fullTime,
-        'id' => $request->id,
-        ]);
-        $citizen = \App\family__data::findOrfail($id);
-        Session::flash('updated_citizen', $request->name . ' : تم تعديله ');
-        return redirect('/citizen');
-        return view('edit_citizen',compact('citizen'));
-    }
-    public function destroy($id)
-    {
-
-        $citizen = \App\family__data::findOrfail($id);
-        \App\family__data::where('id', '=', $id)->delete();
-        Session::flash('deleted_citizen', $citizen->fullName . '   تم الحذف   ');
-        return redirect('/citizen');
+        return view('citizen');
     }
 
 }

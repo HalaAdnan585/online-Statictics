@@ -38,11 +38,11 @@
 	<div class="limiter">
 		<div class="container-login100 page-background1">
 
-                
+
 
 			<div class="wrap-login100" style="width: 700px !important;">
             <center>
-                
+
                 @if ($message = Session::get('error'))
                 <div class="alert alert-danger alert-block mt-3 mb-0">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -51,17 +51,17 @@
                 @endif
 
                 @if (count($errors) > 0)
-                
+
                     @foreach($errors->all() as $error)
 					<div class="alert alert-danger mt-0 mb-2">
 					{{ $error }}
 					</div>
                     @endforeach
-                
+
                 @endif
 
                 </center>
-				<form action="{{action('LoginController@checkRegister')}}" method="POST" class="login100-form validate-form">
+				<form action="{{route('checkRegister',country())}}" method="POST" class="login100-form validate-form">
                     @csrf
 
 					<span class="login100-form-logo">
@@ -122,23 +122,24 @@
 						</div>
 
 						<div class="col-lg-6">
-							
+
 						<div class="wrap-input100 ">
 						  <div class="form-group default-select">
-								<select class="form-control" name="city" style="background:transparent;color:#fff;border-bottom: 2px solid rgba(255,255,255,0.24);" >
-								<option disabled selected>أختر المحافظة</option>
-										<option {{ (old('city') =='القدس')? "selected" : '' }} >القدس</option>
-										<option {{ (old('city') =='جنين')? "selected" : '' }} >جنين</option>
-										<option {{ (old('city') =='طوباس')? "selected" : '' }} >طوباس</option>
-										<option {{ (old('city') =='طولكرم')? "selected" : '' }} >طولكرم</option>
-										<option {{ (old('city') =='نابلس')? "selected" : '' }} >نابلس</option>
-										<option {{ (old('city') =='قلقيلية')? "selected" : '' }} >قلقيلية</option>
-										<option {{ (old('city') =='سلفيت')? "selected" : '' }} >سلفيت</option>
-										<option {{ (old('city') =='رام الله والبيرة')? "selected" : '' }} >رام الله والبيرة</option>
-										<option {{ (old('city') =='أريحا')? "selected" : '' }} >أريحا</option>
-										<option {{ (old('city') =='بيت لحم')? "selected" : '' }} >بيت لحم</option>
-										<option {{ (old('city') =='الخليل')? "selected" : '' }} >الخليل</option>
-								</select>
+								<!--<select class="form-control" name="city" style="background:transparent;color:#fff;border-bottom: 2px solid rgba(255,255,255,0.24);" >-->
+								<!--<option disabled selected>أختر المحافظة</option>-->
+								<!--		<option {{ (old('city') =='القدس')? "selected" : '' }} >القدس</option>-->
+								<!--		<option {{ (old('city') =='جنين')? "selected" : '' }} >جنين</option>-->
+								<!--		<option {{ (old('city') =='طوباس')? "selected" : '' }} >طوباس</option>-->
+								<!--		<option {{ (old('city') =='طولكرم')? "selected" : '' }} >طولكرم</option>-->
+								<!--		<option {{ (old('city') =='نابلس')? "selected" : '' }} >نابلس</option>-->
+								<!--		<option {{ (old('city') =='قلقيلية')? "selected" : '' }} >قلقيلية</option>-->
+								<!--		<option {{ (old('city') =='سلفيت')? "selected" : '' }} >سلفيت</option>-->
+								<!--		<option {{ (old('city') =='رام الله والبيرة')? "selected" : '' }} >رام الله والبيرة</option>-->
+								<!--		<option {{ (old('city') =='أريحا')? "selected" : '' }} >أريحا</option>-->
+								<!--		<option {{ (old('city') =='بيت لحم')? "selected" : '' }} >بيت لحم</option>-->
+								<!--		<option {{ (old('city') =='الخليل')? "selected" : '' }} >الخليل</option>-->
+								<!--</select>-->
+								<input class="input100" type="text" placeholder="انتا الان تسجل ضمن محافظة {{ $city->place }}" disabled value="{{ $city->place }}">
                              </div>
 							</div>
 						</div>
@@ -148,7 +149,7 @@
 						<div class="col-lg-6">
 							<div class="wrap-input100 ">
 								<div class="wrap-input100" data-validate="Enter username">
-									<input class="input100" type="text" name="phoneNum" placeholder="رقم الهاتف" value="{{ old('phoneNum') }}" >
+									<input class="input100" type="text" name="mobile" placeholder="رقم الهاتف" value="{{ old('mobile') }}" >
 									<i class="material-icons focus-input1001">call</i>
 								</div>
 							</div>
@@ -162,7 +163,7 @@
 							   </div>
 							</div>
 						</div>
-					</div>	
+					</div>
 
 					<div class="row">
 						<div class="col-lg-12">
@@ -174,46 +175,80 @@
 							</div>
 						</div>
 
-						
-					</div>	
 
+					</div>
+        <div class="text-center p-t-50" style="margin-bottom: 15px">
+                        <a class="h3" style="color:white;">
+                            انتا الان تسجل ضمن محافظة {{ $city->place }}
+                            لعرض أيام المحافظات اضغط
+                        </a>
+                       <a class="h3" id="myModal"  data-toggle="modal" data-target=".bd-example-modal-lg" style="color:white;cursor: pointer">  هنا</a>
+                    </div>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
 							حفظ
 						</button>
 					</div>
 					<div class="text-center p-t-50">
-						<a class="h3" style="color:white;" href="{{url('/login')}}">
+						<a class="h3" style="color:white;" href="{{route('login',country())}}">
 							 تسجيل دخول
 						</a>
-
+						
 						<!-- <a class="h3" id="location" style="color:white;" href="{{url('/login')}}">
 							 location
 						</a> -->
 					</div>
+					
 				</form>
 			</div>
 		</div>
 	</div>
+	    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <table class="table table-bordered" id="myTable">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width:1%">اسم المحافظه</th>
+                    <th class="text-center" style="width:1%">موعد بدء ادخال البيانات</th>
+                    <th class="text-center" style="width:1%">اخر موعد لادخال البيانات</th>
+                </tr>
+                </thead>
+                <tbody>
+                   
+                    @foreach($cityAll as $item)
+                    <tr>
+                        <th scope="row" class="text-center">{{ $item->place }}</th>
+                        <td>{{$item->start}}</td>
+                        <td>{{$item->end}}</td>
+
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
 	<script>
+	  $('#myModal').modal('show');
 var x = document.getElementById("location");
 
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
+  } else {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
 function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  x.innerHTML = "Latitude: " + position.coords.latitude +
   "<br>Longitude: " + position.coords.longitude;
 }
 
 getLocation()
 </script>
-	
+
 	<!-- Plugins Js -->
 
 	<script src="{{asset('assets/js/app.min.js')}}"></script>

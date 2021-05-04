@@ -28,11 +28,21 @@
 	<div class="limiter">
 		<div class="container-login100 page-background1">
 
-                
+
 
 			<div class="wrap-login100" >
             <center>
-                
+@if (session('status'))
+  <div class="alert alert-success">
+    {{ session('status') }}
+  </div>
+@endif
+@if (session('warning'))
+  <div class="alert alert-warning">
+    {{ session('warning') }}
+  </div>
+@endif
+
                 @if ($message = Session::get('error'))
                 <div class="alert alert-danger alert-block mt-3 mb-0">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -51,7 +61,7 @@
                 @endif
 
                 </center>
-				<form action="{{action('LoginController@checkLogin')}}" method="POST" class="login100-form validate-form">
+				<form action="{{route('checklogin',country())}}" method="POST" class="login100-form validate-form">
                     @csrf
 
 					<span class="login100-form-logo">
@@ -60,7 +70,7 @@
 					<span class="login100-form-title p-b-34 p-t-27">
 						تسجيل الدخول
 					</span>
-                    
+
 					<div class="wrap-input100 validate-inpu1t" data-validate="Enter username">
 						<input class="input100" type="email" name="email" placeholder="الايميل" autofocus>
 						<i class="material-icons focus-input1001">email</i>
@@ -69,7 +79,7 @@
 						<input class="input100" type="password" name="password" placeholder="كلمة المرور">
 						<i class="material-icons focus-input1001">lock</i>
 					</div>
-					
+
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
 							تسجيل دخول
@@ -78,7 +88,7 @@
 					<div class="row">
 						<div class="col-lg-5">
 							<div class="text-center p-t-50">
-								<a class="h3" style="color:white;" href="{{url('/register')}}">
+								<a class="h3" style="color:white;" href="{{route('register',country())}}">
 									انشاء حساب جديد
 								</a>
 							</div>
@@ -86,7 +96,7 @@
 						<div class="col-lg-1"></div>
 						<div class="col-lg-6">
 							<div class="text-center p-t-50">
-								<a class="h3" style="color:white;" href="{{url('/email')}}">
+								<a class="h3" style="color:white;" href="{{route('email',country())}}">
 									هل نسيت كلمة المرور؟
 								</a>
 
@@ -96,7 +106,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 				</form>
 			</div>
 		</div>
@@ -108,13 +118,13 @@ var x = document.getElementById("location1");
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
+  } else {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
 function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  x.innerHTML = "Latitude: " + position.coords.latitude +
   "<br>Longitude: " + position.coords.longitude;
 }
 
